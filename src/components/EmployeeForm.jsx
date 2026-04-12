@@ -1,95 +1,99 @@
-import React from 'react';
-import '../EmployeeForm.css';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-class EmployeeForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: '',
-      email: '',
-      title: '',
-      department: ''
-    };
-  }
+function EmployeeForm({ addEmployee }) {
+  const navigate = useNavigate();
 
-  handleChange = (event) => {
-    const { name, value } = event.target;
-    this.setState({ [name]: value });
+  const [formData, setFormData] = useState({
+    EmployeeId: "",
+    name: "",
+    email: "",
+    phone: "",
+    department: "",
+    position: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
-  handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-    console.log('New Employee Submitted:', this.state);
+    addEmployee(formData);
 
-    if (this.props.onAddEmployee) {
-      this.props.onAddEmployee(this.state);
-    }
-
-    this.setState({
-      name: '',
-      email: '',
-      title: '',
-      department: ''
+    setFormData({
+      EmployeeId: "",
+      name: "",
+      email: "",
+      phone: "",
+      department: "",
+      position: "",
     });
+
+    navigate("/employees");
   };
 
-  render() {
-    const { name, email, title, department } = this.state;
-
-    return (
-      <div className="employee-form-container">
-        <h1>New Employee Form</h1>
-        <form className="employee-form" onSubmit={this.handleSubmit}>
-          <label htmlFor="name">Employee Name</label>
-          <input
-            id="name"
-            type="text"
-            name="name"
-            value={name}
-            onChange={this.handleChange}
-            placeholder="Enter employee name"
-            required
-          />
-
-          <label htmlFor="email">Email Address</label>
-          <input
-            id="email"
-            type="email"
-            name="email"
-            value={email}
-            onChange={this.handleChange}
-            placeholder="Enter email address"
-            required
-          />
-
-          <label htmlFor="title">Job Title</label>
-          <input
-            id="title"
-            type="text"
-            name="title"
-            value={title}
-            onChange={this.handleChange}
-            placeholder="Enter job title"
-            required
-          />
-
-          <label htmlFor="department">Department</label>
-          <input
-            id="department"
-            type="text"
-            name="department"
-            value={department}
-            onChange={this.handleChange}
-            placeholder="Enter department"
-            required
-          />
-
-          <button type="submit">Add Employee</button>
-        </form>
-      </div>
-    );
-  }
+  return (
+    <div className="employee-form">
+      <h1>Employee Form</h1>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="EmployeeId"
+          placeholder="Employee ID"
+          value={formData.EmployeeId}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="text"
+          name="name"
+          placeholder="Full Name"
+          value={formData.name}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="text"
+          name="phone"
+          placeholder="Phone"
+          value={formData.phone}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="text"
+          name="department"
+          placeholder="Department"
+          value={formData.department}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="text"
+          name="position"
+          placeholder="Position"
+          value={formData.position}
+          onChange={handleChange}
+          required
+        />
+        <button type="submit">Add Employee</button>
+      </form>
+    </div>
+  );
 }
 
 export default EmployeeForm;

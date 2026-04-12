@@ -1,36 +1,35 @@
-import React, { useState } from 'react'
-import EmployeeForm from './components/EmployeeForm'
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import EmployeeForm from "./components/EmployeeForm";
+import EmployeeList from "./components/EmployeeList";
+import EmployeeDetail from "./components/EmployeeDetail";
+import "./App.css";
 
 function App() {
   const [employees, setEmployees] = useState(() => {
-    const savedEmployees = localStorage.getItem('employees')
-    return savedEmployees ? JSON.parse(savedEmployees) : []
-  })
+    const savedEmployees = localStorage.getItem("employees");
+    return savedEmployees ? JSON.parse(savedEmployees) : [];
+  });
 
-  const handleAddEmployee = (employeeData) => {
-    const updatedEmployees = [...employees, employeeData]
-    setEmployees(updatedEmployees)
-    localStorage.setItem('employees', JSON.stringify(updatedEmployees))
-  }
+  useEffect(() => {
+    localStorage.setItem("employees", JSON.stringify(employees));
+  }, [employees]);
+
+  const addEmployee = (newEmployee) => {
+    setEmployees((prevEmployees) => [...prevEmployees, newEmployee]);
+  };
 
   return (
-    <div>
-      <EmployeeForm onAddEmployee={handleAddEmployee} />
-
-      <h2>Employee List</h2>
-      {employees.length === 0 ? (
-        <p>No employees added yet.</p>
-      ) : (
-        <ul>
-          {employees.map((employee, index) => (
-            <li key={index}>
-              {JSON.stringify(employee)}
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
-  )
+    <Router>
+      <div className="app-container">
+        <Routes>
+          <Route path="/" element={<EmployeeForm addEmployee={addEmployee} />} />
+          <Route path="/employees" element={<EmployeeList employees={employees} />} />
+          <Route path="/employees/:id" element={<EmployeeDetail employees={employees} />} />
+        </Routes>
+      </div>
+    </Router>
+  );
 }
 
-export default App
+export default App;
