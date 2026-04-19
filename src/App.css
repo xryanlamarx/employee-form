@@ -1,45 +1,55 @@
-.app-container {
-  max-width: 800px;
-  margin: 0 auto;
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f6f8;
+  margin: 0;
   padding: 20px;
 }
 
-.employee-form,
-.employee-list,
-.employee-detail {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+.container {
+  max-width: 900px;
+  margin: auto;
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,.1);
 }
 
-.employee-form form {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+h1 {
+  text-align: center;
+  color: #003366;
 }
 
-.employee-form input,
-.employee-form button {
+input {
   padding: 10px;
-  font-size: 16px;
+  margin: 5px;
+  width: 200px;
 }
 
-.employee-form button {
+button {
+  padding: 10px 15px;
+  background: #003366;
+  color: white;
+  border: none;
+  border-radius: 6px;
   cursor: pointer;
 }
 
-.employee-list ul {
-  list-style: none;
-  padding: 0;
+button:hover {
+  background: #0055aa;
 }
 
-.employee-list li {
-  margin: 10px 0;
+table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
 }
 
-.employee-list a,
-.employee-detail a {
-  color: #0056b3;
-  text-decoration: none;
+th, td {
+  padding: 12px;
+  border: 1px solid #ddd;
+}
+
+th {
+  background: #003366;
+  color: white;
 }
